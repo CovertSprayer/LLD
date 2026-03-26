@@ -1,0 +1,137 @@
+# OOP Revision Notes
+
+## 1. Core Concepts
+
+### Classes and Objects
+- **Class**: Blueprint for creating objects (defines structure and behavior)
+- **Object**: Instance of a class (has state and behavior)
+
+### A. Encapsulation
+- Bundle data (attributes) and methods (functions) together
+- Hide internal implementation details
+- Use access modifiers: `private`, `protected`, `public`
+- Protects data integrity and reduces complexity
+
+### B. Inheritance
+- Mechanism to create new classes from existing ones
+- Parent/Base class: Contains common attributes and methods
+- Child/Derived class: Inherits and can override parent behavior
+- Types: Single, Multiple, Multilevel, Hierarchical, Hybrid
+- `super` keyword: Access parent class members
+
+| Type | Supported in Java |
+|----------|-----------|
+| Single | ✓ |
+| Multilevel | ✓ |
+| Hierarchical | ✓ |
+| Multiple (class) | ✗ |
+| Multiple (interface) | ✓ |
+
+### C. Polymorphism
+- "Many forms" - ability to take multiple forms
+- **Compile-time (Static)**: Method overloading, Operator overloading
+- **Runtime (Dynamic)**: Method overriding, achieved through inheritance
+
+### D. Abstraction
+- Hide complexity by showing only essential features
+- Abstract classes and interfaces define contracts
+- Cannot instantiate abstract classes
+- Interfaces define what methods must exist, not how
+
+## 2. Access Modifiers
+
+| Modifier | Same Class | Package | Subclass | Outside |
+|----------|-----------|---------|----------|---------|
+| `public` | ✓ | ✓ | ✓ | ✓ |
+| `protected` | ✓ | ✓ | ✓ | ✗ |
+| `default` | ✓ | ✓ | ✗ | ✗ |
+| `private` | ✓ | ✗ | ✗ | ✗ |
+
+## 3. Method Overloading vs Overriding
+
+### Overloading (Compile-time)
+- Same method name, different parameters
+- In the same class or parent-child relationship
+- Return type can differ if parameters are different
+- Static/Early binding
+
+### Overriding (Runtime)
+- Child class provides specific implementation of parent method
+- Same signature (name, parameters, return type)
+- Uses `@Override` annotation
+- Dynamic/Late binding (determined at runtime)
+
+## 4. Constructors
+
+- Special methods called when object is created
+- Same name as class
+- No return type
+- Can be overloaded
+- **Default constructor**: No-arg constructor (auto-generated if not defined)
+- **Parameterized constructor**: Takes arguments
+- **Copy constructor**: Initializes object from another object
+
+## 5. `this` and `super` Keywords
+
+- **`this`**: Reference to current object
+  - Access instance variables/methods
+  - Call constructor: `this(args)`
+  - Return object: `return this;`
+
+- **`super`**: Reference to parent class
+  - Call parent constructor: `super(args)`
+  - Access parent methods/variables: `super.method()`
+  - Must be first statement in constructor
+
+## 6. Static Members
+
+- Belong to class, not instances
+- Shared by all objects
+- Accessed via class name: `ClassName.staticMember`
+- Called at class loading
+- Memory allocated once
+
+## 7. Final Keyword
+
+- **`final` class**: Cannot be inherited
+- **`final` method**: Cannot be overridden
+- **`final` variable**: Cannot be reassigned (constant)
+
+## 8. Abstract Class vs Interface
+
+| Feature | Abstract Class | Interface |
+|---------|---|---|
+| Constructor | Yes | No |
+| State | Can have state (variables) | Only constants |
+| Methods | Mix of abstract & concrete | Only abstract (default static) |
+| Inheritance | Single | Multiple |
+| Access | public, protected, private | public only |
+| Purpose | Shared code/state | Contract/specification |
+
+## 9. Design Principles
+
+### DRY (Don't Repeat Yourself)
+- Avoid code duplication
+- Use inheritance, composition, or methods
+
+### SOLID Principles
+- **S**: Single Responsibility - One reason to change
+- **O**: Open-Closed - Open for extension, closed for modification
+- **L**: Liskov Substitution - Subtype can replace supertype
+- **I**: Interface Segregation - Specific interfaces over general
+- **D**: Dependency Inversion - Depend on abstractions, not concrete
+
+### Composition vs Inheritance
+- Prefer composition when relationships are "has-a"
+- Use inheritance for "is-a" relationships
+- Composition provides flexibility
+
+## 10. Key Takeaways
+- Encapsulation protects data and reduces bugs
+- Inheritance promotes code reuse
+- Polymorphism provides flexibility
+- Abstraction hides complexity
+- Use access modifiers to control visibility
+- Override equals/toString when needed
+- Avoid tight coupling
+- Follow SOLID principles

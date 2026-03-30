@@ -22,4 +22,12 @@ public class Cell {
     public boolean isEmpty() {
         return this.value == null;
     }
+
+    public int getRow() {
+        return row;
+    }
+
+    public int getCol() {
+        return col;
+    }
 }

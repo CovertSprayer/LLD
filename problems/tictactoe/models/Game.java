@@ -1,6 +1,8 @@
 package problems.tictactoe.models;
 
 import problems.tictactoe.enums.GameStatus;
+import problems.tictactoe.states.GameState;
+import problems.tictactoe.states.InProgressState;
 
 public class Game {
     private Board board;
@@ -9,6 +11,7 @@ public class Game {
     private Player currentPlayer;
     private GameStatus status;
     private int movesPlayed;
+    private GameState state;
 
     public Game(Player p1, Player p2) {
         this.board = new Board(3);
@@ -17,49 +20,28 @@ public class Game {
         this.currentPlayer = p1;
         this.status = GameStatus.IN_PROGRESS;
         this.movesPlayed = 0;
+        this.state = new InProgressState();
     }
 
     public void playMove(int row, int col) {
-        boolean success = board.makeMove(row, col, currentPlayer.getMarker());
-
-        if(!success) {
-            System.out.println("Invalid move!");
-            return;
-        }
-
-        this.movesPlayed++;
-
-        board.printBoard();
-
-        if(checkWinner(row, col)) {
-            status = GameStatus.WIN;
-            System.out.println(currentPlayer.getName() + " wins!");
-            return;
-        }
-
-        if(this.movesPlayed == 9) {
-            status = GameStatus.DRAW;
-            System.out.println("Game Draw!");
-            return;
-        }
-
-        switchPlayer();
+        state.play(this, row, col);
     }
 
-    private void switchPlayer() {
+    public void switchPlayer() {
         this.currentPlayer = (currentPlayer == player1) ? player2 : player1;
     }
 
-    private boolean checkWinner(int row, int col) {
+    public boolean checkWinner(int row, int col) {
         Cell[][] grid = board.getGrid();
         char mark = currentPlayer.getMarker();
+        int size = board.getSize();
 
         boolean winRow = true;
         boolean winCol = true;
         boolean winDiag = true;
         boolean winAntiDiag = true;
 
-        for(int i=0;i<3;i++) {
+        for(int i = 0; i < size; i++) {
 
             if(grid[row][i].getValue() == null || grid[row][i].getValue() != mark)
                 winRow = false;
@@ -70,11 +52,42 @@ public class Game {
             if(grid[i][i].getValue() == null || grid[i][i].getValue() != mark)
                 winDiag = false;
 
-            if(grid[i][2-i].getValue() == null || grid[i][2-i].getValue() != mark)
+            if(grid[i][size - 1 - i].getValue() == null || grid[i][size - 1 - i].getValue() != mark)
                 winAntiDiag = false;
         }
 
         return winRow || winCol || winDiag || winAntiDiag;
     }
 
+    public Board getBoard() {
+        return board;
+    }
+
+    public Player getCurrentPlayer() {
+        return currentPlayer;
+    }
+
+    public int getMovesPlayed() {
+        return movesPlayed;
+    }
+
+    public void incrementMovesPlayed() {
+        this.movesPlayed++;
+    }
+
+    public void setStatus(GameStatus status) {
+        this.status = status;
+    }
+
+    public GameStatus getStatus() {
+        return status;
+    }
+
+    public void setState(GameState state) {
+        this.state = state;
+    }
+
+    public GameState getState() {
+        return state;
+    }
 }

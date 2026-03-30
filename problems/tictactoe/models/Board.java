@@ -21,7 +21,7 @@ public class Board {
         }
 
         if(!grid[row][col].isEmpty()) {
-            return true;
+            return false;
         }
 
         grid[row][col].setValue(marker);
@@ -45,5 +45,9 @@ public class Board {
 
     public Cell[][] getGrid() {
         return this.grid;
+    }
+
+    public int getSize() {
+        return size;
     }
 }

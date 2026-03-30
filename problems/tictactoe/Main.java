@@ -1,7 +1,12 @@
 package problems.tictactoe;
+import java.util.List;
 
 import problems.tictactoe.models.Game;
 import problems.tictactoe.models.Player;
+import problems.tictactoe.strategy.ColumnWinningStrategy;
+import problems.tictactoe.strategy.DiagonalWinningStrategy;
+import problems.tictactoe.strategy.RowWinningStrategy;
+import problems.tictactoe.strategy.WinningStrategy;
 
 public class Main {
 
@@ -10,7 +15,11 @@ public class Main {
         Player p1 = new Player("Shreyance", 'X');
         Player p2 = new Player("Rahul", 'O');
 
-        Game game = new Game(p1, p2);
+        WinningStrategy rowWinningStrategy = new RowWinningStrategy();
+        WinningStrategy colWinningStrategy = new ColumnWinningStrategy();
+        WinningStrategy diagonalWinningStrategy = new DiagonalWinningStrategy();
+
+        Game game = new Game(p1, p2, List.of(rowWinningStrategy, colWinningStrategy, diagonalWinningStrategy));
 
         game.playMove(0,0);
         game.playMove(1,0);

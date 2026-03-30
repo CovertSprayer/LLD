@@ -1,8 +1,11 @@
 package problems.tictactoe.models;
 
+import java.util.List;
+
 import problems.tictactoe.enums.GameStatus;
 import problems.tictactoe.states.GameState;
 import problems.tictactoe.states.InProgressState;
+import problems.tictactoe.strategy.WinningStrategy;
 
 public class Game {
     private Board board;
@@ -12,8 +15,9 @@ public class Game {
     private GameStatus status;
     private int movesPlayed;
     private GameState state;
+    private final List<WinningStrategy> winningStrategies;
 
-    public Game(Player p1, Player p2) {
+    public Game(Player p1, Player p2, List<WinningStrategy> strategies) {
         this.board = new Board(3);
         this.player1 = p1;
         this.player2 = p2;
@@ -21,6 +25,7 @@ public class Game {
         this.status = GameStatus.IN_PROGRESS;
         this.movesPlayed = 0;
         this.state = new InProgressState();
+        this.winningStrategies = strategies;
     }
 
     public void playMove(int row, int col) {
@@ -32,31 +37,11 @@ public class Game {
     }
 
     public boolean checkWinner(int row, int col) {
-        Cell[][] grid = board.getGrid();
-        char mark = currentPlayer.getMarker();
-        int size = board.getSize();
-
-        boolean winRow = true;
-        boolean winCol = true;
-        boolean winDiag = true;
-        boolean winAntiDiag = true;
-
-        for(int i = 0; i < size; i++) {
-
-            if(grid[row][i].getValue() == null || grid[row][i].getValue() != mark)
-                winRow = false;
-
-            if(grid[i][col].getValue() == null || grid[i][col].getValue() != mark)
-                winCol = false;
-
-            if(grid[i][i].getValue() == null || grid[i][i].getValue() != mark)
-                winDiag = false;
-
-            if(grid[i][size - 1 - i].getValue() == null || grid[i][size - 1 - i].getValue() != mark)
-                winAntiDiag = false;
+        for(WinningStrategy ws: winningStrategies) {
+            if(ws.check(board, row, col, currentPlayer.getMarker())) return true;
         }
 
-        return winRow || winCol || winDiag || winAntiDiag;
+        return false;
     }
 
     public Board getBoard() {
